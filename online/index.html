@@ -1,0 +1,282 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>جرس المسابقة</title></head><body><style>
+@font-face{font-family:Cairo;src:url(Cairo.ttf);font-weight:200 1000;font-display:swap}
+#buzz-preview {font:16px system-ui;color:#24282c;padding:14px 8px;color-scheme:light}
+#buzz-preview * {box-sizing:border-box}
+#buzz-preview .phones {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,275px),1fr));gap:14px;max-width:655px;margin:auto}
+#buzz-preview section {display:grid;align-content:start;gap:12px;padding:15px;border:1px solid #c9cacc;border-radius:24px;background:linear-gradient(145deg,#fcfcfd,#e9eaec);box-shadow:0 10px 22px #24272c21}
+#buzz-preview header,#buzz-preview label,#buzz-preview .players div {display:flex;align-items:center;justify-content:space-between;gap:8px}
+#buzz-preview header strong {font-size:19px}
+#buzz-preview header small {color:#484e55;white-space:nowrap}
+#buzz-preview .surface {border:1px solid #d2d4d6;background:#f8f9fa;border-radius:12px;padding:7px 10px}
+#buzz-preview .players {display:grid;gap:8px;padding:12px}
+#buzz-preview p {margin:0;min-height:38px;text-align:center;display:grid;place-items:center;border-radius:10px;background:#e2e5e8;color:#353c43;padding:5px}
+#buzz-preview button,#buzz-preview select {font:inherit;min-height:44px;border-radius:10px}
+#buzz-preview section > button,#buzz-preview .judges button {border:1px solid #aeb5bd;background:linear-gradient(#fff,#cdd2d7);color:#20262c;font-weight:750;padding:5px}
+#buzz-preview section > button:disabled,#buzz-preview .judges button:disabled {color:#555d65;background:#e1e4e6}
+#buzz-preview .judges {display:grid;grid-template-columns:1fr 1fr;gap:6px}
+#buzz-preview #buzz-right:not(:disabled) {background:#c6efcf}
+#buzz-preview #buzz-wrong:not(:disabled) {background:#f6c7ce}
+#buzz-preview .bench {display:grid;place-items:center;padding:8px 0 16px;background:radial-gradient(ellipse at center,#fff,#edeef0 75%);border-radius:16px}
+#buzz-preview .chrome {--center:#ffca54;--mid:#ff9a22;--rim:#a92a08;--light:#fff3ae;position:relative;display:grid;place-items:center;aspect-ratio:1;border-radius:50%;padding:0;border:1px solid #9b9e9f;background:repeating-conic-gradient(from 0deg,#ffffff36 0deg .7deg,#565b602a .7deg 1.45deg),conic-gradient(from 0deg,#f9f9fa,#aeb0b2 12%,#f9fafb 28%,#929598 44%,#f5f5f6 55%,#aeb1b4 73%,#fff 88%,#f9f9fa);box-shadow:inset 0 0 0 2px #ffffff8a,0 4px 6px #26282e50}
+#buzz-preview [data-tone=pink] {--center:#ff9ad8;--mid:#f53ab0;--rim:#8d135d;--light:#ffe2f8}
+#buzz-preview [data-tone=green] {--center:#66f54d;--mid:#0cca22;--rim:#146009;--light:#e4ffad}
+#buzz-preview [data-tone=purple] {--center:#e085ff;--mid:#b639f1;--rim:#5e109e;--light:#fce5ff}
+#buzz-preview [data-tone=yellow] {--center:#ffe82c;--mid:#ffbc11;--rim:#a44808;--light:#fffbd0}
+#buzz-preview [data-tone=blue] {--center:#6bd5ff;--mid:#299ce8;--rim:#103977;--light:#e0faff}
+#buzz-preview .lens {position:relative;display:block;width:79%;aspect-ratio:1;border-radius:50%;border:1px solid var(--rim);background:radial-gradient(ellipse at 43% 37%,var(--center) 15%,var(--mid) 64%,var(--rim) 100%);box-shadow:inset 0 0 .75em var(--rim),0 0 0 1px #ffffffc0}
+#buzz-preview .lens::before,#buzz-preview .lens::after {content:"";position:absolute;border-radius:50%}
+#buzz-preview .lens::before {inset:4% 14% 56%;background:linear-gradient(155deg,var(--light),#ffffff0d);transform:rotate(12deg)}
+#buzz-preview .lens::after {width:10%;aspect-ratio:1;top:29%;left:10%;background:radial-gradient(circle at 40% 40%,var(--light),transparent 77%)}
+#buzz-preview .main {width:min(80%,202px);font-size:20px;box-shadow:inset 0 0 0 2px #ffffff9e,0 12px 20px #292b325c}
+#buzz-preview .main:disabled .lens {filter:saturate(.65) brightness(.88)}
+#buzz-preview .main:active:not(:disabled) .lens {transform:scale(.95) translateY(2px);filter:brightness(.93)}
+#buzz-preview .palette {display:grid;grid-template-columns:repeat(6,1fr);gap:3px}
+#buzz-preview .palette button {width:100%;min-height:40px}
+#buzz-preview .palette button[aria-pressed=true] {outline:2px solid #333c48;outline-offset:1px}
+#buzz-preview button:focus-visible {outline:3px solid #144fbb;outline-offset:2px}
+
+#buzz-preview {--navy:#17283c;--steel:#52647a;padding:14px 8px}
+#buzz-preview .phones {grid-template-columns:repeat(auto-fit,minmax(min(100%,285px),1fr));max-width:690px;gap:16px}
+#buzz-preview section {padding:0;overflow:hidden;gap:0;border-color:#c2c9d1;background:linear-gradient(155deg,#fff,#e8edf2);align-content:start}
+#buzz-preview header {padding:14px 15px;background:linear-gradient(120deg,#142438,#2c445d);color:#fff;min-height:68px}
+#buzz-preview header strong {display:block;font-size:20px}
+#buzz-preview header small {color:#dee9f4}
+#buzz-preview .live {font-size:12px;border:1px solid #ffffff44;border-radius:18px;padding:5px 8px;white-space:nowrap}
+#buzz-preview .live::before {content:"";display:inline-block;width:7px;height:7px;background:#70e5b2;border-radius:50%;margin-inline-end:5px}
+#buzz-preview .content {display:grid;gap:11px;padding:13px}
+#buzz-preview .room {display:flex;justify-content:space-between;align-items:center;gap:8px;color:var(--steel);font-size:13px}
+#buzz-preview .room bdi {display:block;font-size:25px;font-weight:850;letter-spacing:3px;color:var(--navy)}
+#buzz-preview .players {padding:0;overflow:hidden}
+#buzz-preview .players h4 {margin:0;padding:8px 10px;background:#e8edf3;color:#283d53;font-size:13px}
+#buzz-preview .players div {padding:0 10px 7px}
+#buzz-preview .players div bdi {display:grid;place-items:center;background:#e5ebf2;color:#203854;border-radius:7px;min-width:30px;min-height:26px;font-weight:800}
+#buzz-preview .players div[data-winner=true] {color:#6a4100;background:#fff1c7;padding-top:5px}
+#buzz-preview .command {display:grid;gap:7px}
+#buzz-preview .command > button {border:1px solid #254a72;background:linear-gradient(#325e88,#214366);color:#fff;font-weight:800}
+#buzz-preview .command > button:disabled {color:#526173;background:#e4e9ee;border-color:#c5ced8}
+#buzz-preview .status {min-height:44px;font-weight:780;border:1px solid #c8d1db;background:#e9eef3;color:#30465e}
+#buzz-preview[data-phase=open] .status:not([data-excluded=true]) {background:#daf5e8;border-color:#92cdb3;color:#17563d}
+#buzz-preview[data-phase=answer] .status:not([data-excluded=true]) {background:#fff0bf;border-color:#e7c166;color:#644200}
+#buzz-preview .bench {min-height:223px;padding:12px 0 20px;border:1px solid #d5dae1;background:radial-gradient(ellipse at 50% 42%,#fff,#e8ecf1 73%,#dce2e9)}
+#buzz-preview .main {width:min(82%,206px)}
+#buzz-preview .main:not(:disabled) .lens {box-shadow:inset 0 0 .75em var(--rim),0 0 14px var(--mid)}
+#buzz-preview .palette {grid-template-columns:repeat(6,minmax(0,1fr));gap:5px}
+#buzz-preview .palette button {min-height:0;width:100%;height:auto}
+#buzz-preview .color-label {margin:0;color:#445971;font-size:13px}
+#buzz-preview label.surface {font-size:13px;color:#30465e}
+#buzz-preview select {background:white;color:var(--navy);border:1px solid #bac6d4;padding:0 7px}
+
+#buzz-preview .winner-card {display:none}
+#buzz-preview[data-phase=answer] .winner-card {display:grid;place-content:center;justify-items:center;gap:4px;min-height:122px;padding:10px;text-align:center;border:1px solid #c59a45;border-radius:15px;background:radial-gradient(ellipse at 50% 0%,#fff9e5,#ffefba 58%,#f7dfa0);color:#5a3709;box-shadow:inset 0 1px 0 #fff8e4,0 4px 9px #7b54151e}
+#buzz-preview .winner-card span {font:700 15px/1.5 Cairo,system-ui,sans-serif}
+#buzz-preview .winner-card bdi {font:900 clamp(32px,7vw,49px)/1.26 Cairo,system-ui,sans-serif;max-width:100%;overflow-wrap:anywhere}
+#buzz-preview[data-phase=answer] #buzz-host-status,
+#buzz-preview[data-phase=answer] #buzz-player-status:not([data-excluded=true]) {position:absolute;width:1px;height:1px;min-height:0;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+#buzz-preview[data-phase=answer] section[aria-label="شاشة اللاعب"] .bench {min-height:140px}
+#buzz-preview[data-phase=answer] section[aria-label="شاشة اللاعب"] .main {width:min(65%,115px)}
+
+html,body {margin:0;background:#e9edf2}
+#buzz-preview {max-width:550px;margin:auto;padding:12px;font-family:Cairo,system-ui,sans-serif}
+#buzz-preview .phones {display:block}
+#buzz-preview section[hidden] {display:none}
+#buzz-preview .home-actions {display:grid;gap:12px}
+#buzz-preview label.entry {display:grid;gap:4px;font-size:14px}
+#buzz-preview input {box-sizing:border-box;width:100%;min-height:48px;padding:8px 10px;background:#fff;color:#17283c;border:1px solid #aab6c4;border-radius:10px;font:inherit;font-size:17px}
+#buzz-preview .join {margin:0;display:grid;gap:8px}
+#buzz-preview .code {font-family:monospace;font-size:20px;letter-spacing:1px;overflow-wrap:anywhere}
+#buzz-preview .leave {min-height:44px;border:1px solid #bcc8d4;background:#f0f3f7;color:#30465e;font-weight:700}
+#buzz-preview .palette button {min-height:44px}
+#buzz-preview .bench {min-height:248px}
+#buzz-preview .main {width:min(85%,237px);touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#buzz-preview .winner-card bdi {font-size:clamp(32px,11vw,56px)}
+#buzz-preview .error {background:#fbe1e6;color:#6d263a}
+#buzz-preview .error[hidden] {display:none}
+#buzz-preview .home-logo {display:block;margin:5px auto 8px}
+#buzz-preview .join-qr {margin:0;background:#fff;border:1px solid #c2c9d1;border-radius:12px;text-align:center;padding:8px}
+#buzz-preview .join-qr img {display:block;width:min(100%,185px);height:auto;margin:auto}
+#buzz-preview .join-qr img[hidden],#buzz-preview .join-qr select[hidden] {display:none}
+#buzz-preview .join-qr select {max-width:100%;margin-top:6px}
+</style>
+<div id="buzz-preview" lang="ar" dir="rtl">
+  <div class="phones">
+    <section id="home">
+      <header><div><small>مسابقة السرعة</small><strong>جرس المسابقة</strong></div></header>
+      <div class="content">
+        <img class="home-logo" src="buzzer-logo.png" width="110" height="110" alt="">
+        <p>العبوا عبر الإنترنت باستعمال Wi-Fi أو بيانات الهاتف.</p>
+        <div class="command home-actions">
+          <button id="create" type="button">إنشاء غرفة · منشّط</button>
+        </div>
+        <form id="join" class="command join">
+          <label class="entry">اسم اللاعب<input id="name" maxlength="30" required autocomplete="off"></label>
+          <label class="entry">رمز الغرفة<input id="code" dir="ltr" maxlength="16" required autocapitalize="characters" autocomplete="off" spellcheck="false"></label>
+          <button type="button" id="scan">مسح رمز QR</button>
+          <button type="submit" id="join-button">الانضمام إلى الغرفة</button>
+        </form>
+        <p class="error" id="error" role="alert" hidden></p>
+      </div>
+    </section>
+    <section id="host" aria-label="شاشة المنشّط" hidden>
+      <header><div><small>جرس المسابقة</small><strong>لوحة المنشّط</strong></div><span class="live">عبر الإنترنت</span></header>
+      <div class="content">
+      <div class="surface room"><span>رمز الغرفة <bdi dir="ltr" class="code" id="room-code"></bdi></span><span id="count">0 / 20</span></div>
+      <figure class="join-qr">
+        <figcaption>امسح الرمز للانضمام</figcaption>
+        <img id="room-qr" width="185" height="185" alt="رمز QR للغرفة" hidden>
+        <select id="room-address" dir="ltr" aria-label="عنوان الشبكة" hidden></select>
+      </figure>
+      <div class="surface players" aria-label="اللاعبون"><h4>اللاعبون والنقاط</h4><div id="empty">في انتظار اللاعبين</div><div id="scores" style="display:grid"></div></div>
+      <div class="winner-card" id="buzz-host-winner"><span>أول من ضغط</span><bdi></bdi></div>
+      <p class="status" id="buzz-host-status" aria-live="polite">بانتظار فتح الأزرار</p>
+      <div class="command">
+      <button type="button" class="cursor-interaction" id="buzz-open">فتح الأزرار</button>
+      <div class="judges">
+        <button type="button" class="cursor-interaction" id="buzz-right" disabled>إجابة صحيحة</button>
+        <button type="button" class="cursor-interaction" id="buzz-wrong" disabled>إجابة خاطئة</button>
+      </div>
+      </div><button class="leave" type="button">إنهاء الغرفة</button></div>
+    </section>
+    <section id="player" aria-label="شاشة اللاعب" hidden>
+      <header><div><small>جرس المسابقة</small><strong>شاشة اللاعب</strong></div><span class="live">متصل</span></header>
+      <div class="content">
+      <div class="winner-card" id="buzz-player-winner"><span>أول من ضغط</span><bdi></bdi></div>
+      <p class="status" id="buzz-player-status" aria-live="polite">بانتظار فتح الأزرار</p>
+      <div class="surface" id="player-name"></div>
+      <div class="bench">
+        <button type="button" class="chrome main cursor-interaction" id="buzz-hit" data-tone="orange" aria-label="اضغط على الجرس" disabled><span class="lens"></span></button>
+      </div>
+      <h4 class="color-label">لون الجرس</h4>
+      <div class="palette" role="group" aria-label="لون الجرس">
+        <button type="button" class="chrome cursor-interaction" data-tone="orange" aria-label="برتقالي" aria-pressed="true"><span class="lens"></span></button>
+        <button type="button" class="chrome cursor-interaction" data-tone="pink" aria-label="وردي" aria-pressed="false"><span class="lens"></span></button>
+        <button type="button" class="chrome cursor-interaction" data-tone="green" aria-label="أخضر" aria-pressed="false"><span class="lens"></span></button>
+        <button type="button" class="chrome cursor-interaction" data-tone="purple" aria-label="بنفسجي" aria-pressed="false"><span class="lens"></span></button>
+        <button type="button" class="chrome cursor-interaction" data-tone="yellow" aria-label="أصفر" aria-pressed="false"><span class="lens"></span></button>
+        <button type="button" class="chrome cursor-interaction" data-tone="blue" aria-label="أزرق" aria-pressed="false"><span class="lens"></span></button>
+      </div><button class="leave" type="button">مغادرة الغرفة</button>
+      </div>
+    </section>
+  </div>
+</div>
+<script src="config.js"></script>
+<script src="transport.js"></script>
+<script>
+(() => {
+  const get = id => document.getElementById(id);
+  const buzz = id => get('buzz-' + id);
+  const root = get('buzz-preview');
+  const swatches = root.querySelectorAll('.palette button');
+  let state = {phase:'waiting', players:[], winner:0, epoch:0};
+  let screen = 'home';
+  function show(next) {
+    screen = next;
+    for (const id of ['home','host','player']) get(id).hidden = id !== next;
+    get('create').disabled = false;
+    get('join-button').disabled = false;
+    get('scan').disabled = false;
+  }
+  function render() {
+    const {phase, players, winner, excluded} = state;
+    const winnerName = players.find(player => player.id === winner)?.name || '';
+    root.dataset.phase = phase;
+    buzz('open').disabled = phase !== 'waiting' || !players.length;
+    buzz('right').disabled = buzz('wrong').disabled = phase !== 'answer';
+    buzz('hit').disabled = phase !== 'open' || !!excluded;
+    buzz('player-status').dataset.excluded = !!excluded;
+    const message = {waiting:'بانتظار فتح الأزرار',open:'الجرس جاهز · اضغط الآن',answer:'أول ضغطة: ' + winnerName}[phase];
+    for (const role of ['host','player']) {
+      buzz(role + '-winner').querySelector('bdi').textContent = winnerName;
+      buzz(role + '-status').textContent = role === 'player' && excluded ? 'انتظر السؤال التالي' : message;
+    }
+    if (screen !== 'host') return;
+    get('count').textContent = players.length + ' / 20';
+    get('empty').style.display = players.length ? 'none' : '';
+    get('scores').replaceChildren(...players.map(player => {
+      const row = document.createElement('div');
+      row.dataset.winner = player.id === winner;
+      const name = document.createElement('span');
+      const score = document.createElement('bdi');
+      name.textContent = player.name;
+      score.textContent = player.score;
+      row.append(name, score);
+      return row;
+    }));
+  }
+  function showCode(code) {
+    get('room-code').textContent = code;
+    const qr = Online.qr(code);
+    get('room-qr').closest('figure').hidden = !qr;
+    get('room-qr').hidden = !qr;
+    if (qr) get('room-qr').src = qr;
+  }
+  get('room-address').onchange = event => showCode(event.target.value);
+  window.fromNative = (event, value) => {
+    if (event === 'offline' && screen !== 'home') {
+      buzz('hit').disabled = buzz('open').disabled = buzz('right').disabled = buzz('wrong').disabled = true;
+      buzz(screen + '-status').textContent = value;
+    } else if (event === 'error') {
+      if (screen === 'player') Online.stop();
+      show('home');
+      get('error').textContent = value;
+      get('error').hidden = false;
+    } else if (event === 'host') {
+      const codes = value.split(' / ');
+      get('room-address').replaceChildren(...codes.map(code => new Option(code, code)));
+      get('room-address').hidden = codes.length === 1;
+      showCode(codes[0]);
+      show('host');
+    } else if (event === 'player') {
+      get('player-name').textContent = value;
+      render();
+      show('player');
+    } else if (event === 'scanned' && screen === 'home') {
+      get('code').value = value;
+      if (get('name').value.trim()) get('join').requestSubmit();
+      else get('name').focus();
+    } else if (event === 'state' && screen !== 'home') {
+      state = value;
+      render();
+    }
+  };
+  function start() {
+    get('error').hidden = true;
+    get('create').disabled = get('join-button').disabled = get('scan').disabled = true;
+  }
+  get('scan').hidden = !window.Native;
+  get('scan').onclick = () => Online.scan();
+  get('create').onclick = () => { start(); Online.host(); };
+  get('join').onsubmit = event => {
+    event.preventDefault();
+    start();
+    Online.join(get('code').value, get('name').value);
+  };
+  window.exitRoom = () => {
+    Online.stop();
+    get('error').hidden = true;
+    state = {phase:'waiting', players:[], winner:0, epoch:0};
+    show('home');
+    render();
+  };
+  for (const button of root.querySelectorAll('.leave')) button.onclick = window.exitRoom;
+  for (const command of ['open','right','wrong']) buzz(command).onclick = () => Online.command(command);
+  function sendBuzz() {
+    if (buzz('hit').disabled) return;
+    buzz('hit').disabled = true;
+    Online.buzz(state.epoch);
+  }
+  buzz('hit').onpointerdown = event => { if (event.isPrimary && event.button === 0) sendBuzz(); };
+  buzz('hit').onclick = sendBuzz;
+  function selectTone(tone) {
+    buzz('hit').dataset.tone = tone;
+    for (const swatch of swatches) swatch.setAttribute('aria-pressed', String(swatch.dataset.tone === tone));
+  }
+  const storedTone = localStorage.getItem('buzzer-tone');
+  if (Array.from(swatches).some(swatch => swatch.dataset.tone === storedTone)) selectTone(storedTone);
+  for (const swatch of swatches) swatch.onclick = () => {
+    selectTone(swatch.dataset.tone);
+    localStorage.setItem('buzzer-tone', swatch.dataset.tone);
+  };
+  render();
+})();
+</script>
+</body></html>

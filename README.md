@@ -6,4 +6,4 @@
 2. Connectez tous les téléphones au même Wi-Fi ou au même point d’accès.
 3. L’animateur crée la salle. Jusqu’à 20 joueurs peuvent la rejoindre en scannant le QR code dans l’application ou en saisissant le code de salle.
 
-Cette version fonctionne sur le réseau local. Le mode Internet entre réseaux différents reste à développer.
+Cette version fonctionne sur le réseau local. Les [fichiers du mode Internet](./online/) sont en cours d’intégration à une nouvelle version Android.
